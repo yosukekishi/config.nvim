@@ -51,6 +51,9 @@ vim.keymap.set("n", "<leader>h", ":nohlsearch<CR>", { desc = "Clear search highl
 -- jj to escape insert mode
 vim.keymap.set("i", "jj", "<ESC>", { desc = "Exit insert mode" })
 
+-- jj to escape terminal insert mode
+vim.keymap.set("t", "jj", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+
 -- Window navigation
 vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Move to left window" })
 vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Move to bottom window" })
