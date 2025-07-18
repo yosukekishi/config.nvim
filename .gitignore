@@ -1,0 +1,37 @@
+# Neovim temporary files
+*.swp
+*.swo
+*~
+.netrwhist
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Local environment files
+.env
+.env.local
+*.local
+
+# Session files
+Session.vim
+
+# Tags
+tags
+.tags
+
+# Backup files
+*.bak
+*.backup
+
+# Log files
+*.log
+
+# Personal or sensitive files
+secrets.lua
+local-config.lua
