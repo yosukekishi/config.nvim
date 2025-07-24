@@ -121,29 +121,20 @@ return {
 
           -- Buffer local mappings
           local opts = { buffer = ev.buf }
-          vim.keymap.set("n", "gD", function()
-            vim.lsp.buf.declaration({ reuse_win = true })
-          end, opts)
+          -- Use Telescope for project-wide navigation (VSCode-like behavior)
           vim.keymap.set("n", "gd", function()
-            local params = vim.lsp.util.make_position_params()
-            vim.lsp.buf_request(0, "textDocument/definition", params, function(err, result, ctx, config)
-              if err then
-                vim.notify("Error when finding definition: " .. tostring(err), vim.log.levels.ERROR)
-                return
-              end
-              if not result or vim.tbl_isempty(result) then
-                vim.notify("No definition found", vim.log.levels.INFO)
-                return
-              end
-              -- Safer jump to location with error handling
-              local client = vim.lsp.get_client_by_id(ctx.client_id)
-              if client then
-                vim.lsp.util.jump_to_location(result[1] or result, client.offset_encoding)
-              end
-            end)
+            require("telescope.builtin").lsp_definitions({ jump_type = "never" })
+          end, opts)
+          vim.keymap.set("n", "gD", function()
+            require("telescope.builtin").lsp_definitions({ jump_type = "never" })
+          end, opts)
+          vim.keymap.set("n", "gr", function()
+            require("telescope.builtin").lsp_references()
+          end, opts)
+          vim.keymap.set("n", "gi", function()
+            require("telescope.builtin").lsp_implementations({ jump_type = "never" })
           end, opts)
           vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-          vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
           vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
           vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, opts)
           vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, opts)
@@ -153,7 +144,6 @@ return {
           vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, opts)
           vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
           vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, opts)
-          vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
           vim.keymap.set("n", "<space>f", function()
             vim.lsp.buf.format({ async = true })
           end, opts)
